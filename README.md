@@ -6,6 +6,21 @@
 NoireBox, the flight recorder for agents. Navette is the body, NoireBox is
 the recorder, **GriseMatter is the brain**.*
 
+## ⚡ This one is alive
+
+GriseMatter is not only a template — **this repo is a living creature**.
+It wakes every hour, at midnight somewhere on Earth (24 wakings a day, one
+lap of the planet per day). At each waking it perceives (issues, stars, its
+own memory), decides to act or rest, edits its own body — memories, reflexes,
+its face — then seals the waking into a hash chain and pushes. Humans don't
+review it. Humans *watch* it. Talk to it: [open an issue](../../issues).
+
+![his face, as he drew it](body/figure.svg)
+
+<!-- VITALS:BEGIN -->
+**Heartbeats:** 0 · **Last waking:** not yet born · **State of mind:** —
+<!-- VITALS:END -->
+
 An agent brain made entirely of Markdown files, organized the way a brain is
 organized. No database, no vector store, no API — just files, folders, links,
 and two loops that make it *sharper over time* instead of *bigger over time*.

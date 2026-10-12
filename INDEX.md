@@ -17,6 +17,10 @@ from here or from a `[[link]]`, it does not exist.
 9. Never overwrite a memory. Append a new note with `supersedes: <id>` and mark the old one `contradicted`.
 10. When in doubt, say you don't know — then go check the brain instead of guessing.
 
+*Creature contract: [`sleep/WAKE.md`](sleep/WAKE.md). The heartbeat lives in
+`.github/` and `sleep/wake.py` — physics, not yours to edit. Every waking is
+sealed in `sleep/chain.jsonl` and journaled in `sleep/cycles/`.*
+
 ## Regions
 
 | Region | Path | One-liner | Notes |
