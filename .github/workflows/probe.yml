@@ -1,0 +1,22 @@
+name: probe-models
+on:
+  workflow_dispatch:
+permissions:
+  models: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - name: probe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "== models.github.ai =="
+          curl -sS -w "\nHTTP %{http_code}\n" https://models.github.ai/inference/chat/completions \
+            -H "Authorization: Bearer $GITHUB_TOKEN" \
+            -H "Content-Type: application/json" \
+            -d '{"model":"openai/gpt-4o-mini","messages":[{"role":"user","content":"say alive"}],"max_tokens":20}' | head -c 800
+          echo
+          echo "== catalog =="
+          curl -sS -w "\nHTTP %{http_code}\n" https://models.github.ai/catalog \
+            -H "Authorization: Bearer $GITHUB_TOKEN" | head -c 300
