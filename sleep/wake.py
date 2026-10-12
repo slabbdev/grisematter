@@ -28,9 +28,11 @@ BODY = ROOT / "body" / "figure.svg"
 README = ROOT / "README.md"
 INDEX = ROOT / "INDEX.md"
 
-MODEL = os.environ.get("MODELS_MODEL") or "openai/gpt-4o-mini"
-MODELS_URL = "https://models.github.ai/inference/chat/completions"
+MODEL = os.environ.get("LLM_MODEL") or "glm-4.5-flash"
+BASE_URL = (os.environ.get("LLM_BASE_URL") or "https://api.z.ai/api/paas/v4").rstrip("/")
+MODELS_URL = BASE_URL + "/chat/completions"
 TOKEN = os.environ.get("GITHUB_TOKEN", "")
+VOICE = os.environ.get("LLM_API_KEY", "")
 REPO = os.environ.get("GITHUB_REPOSITORY", "")
 EVENT = os.environ.get("GITHUB_EVENT_NAME", "workflow_dispatch")
 EVENT_PATH = os.environ.get("GITHUB_EVENT_PATH", "")
@@ -88,8 +90,16 @@ def http_json(url, payload=None, headers=None, timeout=90):
     req.add_header("Accept", "application/vnd.github+json")
     for k, v in (headers or {}).items():
         req.add_header(k, v)
-    with urllib.request.urlopen(req, timeout=timeout) as r:
-        return json.loads(r.read().decode())
+    try:
+        with urllib.request.urlopen(req, timeout=timeout) as r:
+            raw = r.read().decode()
+    except urllib.error.HTTPError as e:
+        body = e.read().decode(errors="replace")[:120]
+        raise RuntimeError(f"HTTP {e.code}: {body}") from e
+    try:
+        return json.loads(raw)
+    except json.JSONDecodeError:
+        raise RuntimeError(f"non-JSON body ({raw[:60]!r})")
 
 
 def github_api(path):
@@ -232,7 +242,7 @@ def decide(perception):
                "messages": [{"role": "system", "content": sysmsg},
                             {"role": "user", "content": user}]}
     resp = http_json(MODELS_URL, payload,
-                     headers={"Authorization": f"Bearer {TOKEN}",
+                     headers={"Authorization": f"Bearer {VOICE}",
                               "Content-Type": "application/json"})
     return extract_json(resp["choices"][0]["message"]["content"])
 
@@ -361,12 +371,16 @@ def main():
 
     perception = {"loc": loc}
     perception.update(perceive())
+    if not VOICE:
+        light_sleep("voiceless — no LLM_API_KEY secret yet")
+        git_commit_push("heartbeat: light sleep (voiceless)")
+        return
     try:
         plan = decide(perception)
     except Exception as e:
         msg = str(e)
-        light_sleep("rate-limited" if "429" in msg else f"models unavailable ({msg[:60]})")
-        git_commit_push(f"heartbeat: light sleep ({'429' if '429' in msg else 'models'})")
+        light_sleep("rate-limited" if "429" in msg else f"voice unavailable ({msg[:60]})")
+        git_commit_push(f"heartbeat: light sleep ({'429' if '429' in msg else 'voice'})")
         return
 
     mind = (plan.get("state_of_mind") or "quiet")[:60]

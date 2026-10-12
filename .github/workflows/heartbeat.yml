@@ -35,5 +35,7 @@ jobs:
       - name: wake
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          MODELS_MODEL: ${{ vars.MODELS_MODEL }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_BASE_URL: ${{ vars.LLM_BASE_URL }}
+          LLM_MODEL: ${{ vars.LLM_MODEL }}
         run: python3 sleep/wake.py
