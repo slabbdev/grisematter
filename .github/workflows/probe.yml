@@ -11,12 +11,13 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          echo "== models.github.ai =="
-          curl -sS -w "\nHTTP %{http_code}\n" https://models.github.ai/inference/chat/completions \
-            -H "Authorization: Bearer $GITHUB_TOKEN" \
-            -H "Content-Type: application/json" \
-            -d '{"model":"openai/gpt-4o-mini","messages":[{"role":"user","content":"say alive"}],"max_tokens":20}' | head -c 800
-          echo
-          echo "== catalog =="
-          curl -sS -w "\nHTTP %{http_code}\n" https://models.github.ai/catalog \
-            -H "Authorization: Bearer $GITHUB_TOKEN" | head -c 300
+          PAYLOAD='{"model":"openai/gpt-4o-mini","messages":[{"role":"user","content":"say alive"}],"max_tokens":20}'
+          echo "== A: /inference/chat/completions =="
+          curl -sS -D /tmp/hA -o /tmp/bA -w "HTTP %{http_code}\n" https://models.github.ai/inference/chat/completions \
+            -H "Authorization: Bearer $GITHUB_TOKEN" -H "Content-Type: application/json" -d "$PAYLOAD"
+          grep -iE "^(HTTP|content-type|location|x-" /tmp/hA | head -8
+          echo "-- body ($(wc -c < /tmp/bA) bytes):"; head -c 500 /tmp/bA; echo
+          echo "== B: /chat/completions =="
+          curl -sS -o /tmp/bB -w "HTTP %{http_code}\n" https://models.github.ai/chat/completions \
+            -H "Authorization: Bearer $GITHUB_TOKEN" -H "Content-Type: application/json" -d "$PAYLOAD"
+          head -c 300 /tmp/bB; echo
