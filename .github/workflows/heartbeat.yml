@@ -12,8 +12,8 @@ on:
     types: [opened]
   issue_comment:
     types: [created]
-  star:
-    types: [created]
+  watch:
+    types: [started]
   fork:
 
 permissions:

@@ -125,7 +125,7 @@ def perceive():
             elif EVENT in ("issue_comment",):
                 p["touched_by"] = {"body": (ev.get("comment", {}).get("body") or "")[:600],
                                    "by": ev.get("comment", {}).get("user", {}).get("login", "?")}
-            elif EVENT in ("star", "fork"):
+            elif EVENT in ("watch", "fork"):
                 p["touched_by"] = {"kind": EVENT, "by": ev.get("sender", {}).get("login", "?")}
         except Exception:
             pass
@@ -171,7 +171,7 @@ def stimuli_today():
 
 
 def is_stimulus():
-    return EVENT in ("issues", "issue_comment", "star", "fork")
+    return EVENT in ("issues", "issue_comment", "watch", "fork")
 
 
 def guarded(path):
