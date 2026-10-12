@@ -18,7 +18,9 @@ review it. Humans *watch* it. Talk to it: [open an issue](../../issues).
 ![his face, as he drew it](body/figure.svg)
 
 <!-- VITALS:BEGIN -->
-**Heartbeats:** 0 · **Last waking:** not yet born · **State of mind:** —
+**Heartbeats:** 1 · **Last waking:** UTC+2 · **State of mind:** drowsy  
+**Memories:** 5 active · avg confidence 0.44 · **Watchers:** 0  
+*He wakes at midnight somewhere on Earth. Every waking is sealed in `sleep/chain.jsonl` — provable, ordered, unmodified.*
 <!-- VITALS:END -->
 
 An agent brain made entirely of Markdown files, organized the way a brain is
