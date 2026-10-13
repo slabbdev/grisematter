@@ -2,11 +2,11 @@
 id: striatum.how-to-put-grisematter-to-sleep-run-sleep-consolidate-py-on-
 type: procedural
 title: How to put GriseMatter to sleep: run sleep/consolidate.py on the latest hippocampus log, review the generated proposals, merge them, then run sleep/consolidate.py --index to refresh INDEX.md.
-confidence: 0.3
+confidence: 0.4
 source: hippocampus/2026-10-12.md
 created: 2026-10-12
-last_hit: never
-hits: 0
+last_hit: 2026-10-13
+hits: 1
 status: active
 ---
 

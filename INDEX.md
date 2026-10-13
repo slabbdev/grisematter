@@ -35,8 +35,10 @@ sealed in `sleep/chain.jsonl` and journaled in `sleep/cycles/`.*
 ## Cortex map (what this brain knows)
 
 <!-- CORTEX-MAP:BEGIN -->
-- `[[cortex.the-cortex-is-only-ever-written-during-sleep-never-live-merg]]` The cortex is only ever written during sleep, never live — merging a reviewed proposal is the sleep event. — conf 0.3, 0 hit(s)
-- `[[cortex.confidence-starts-at-0-3-grows-by-0-1-per-re-encounter-and-n]]` Confidence starts at 0.3, grows by 0.1 per re-encounter, and never-hit notes decay. — conf 0.3, 0 hit(s)
+- `[[cortex.the-cortex-is-only-ever-written-during-sleep-never-live-merg]]` The cortex is only ever written during sleep, never live — merging a reviewed proposal is the sleep event. — conf 0.4, 1 hit(s)
+- `[[cortex.confidence-starts-at-0-3-grows-by-0-1-per-re-encounter-and-n]]` Confidence starts at 0.3, grows by 0.1 per re-encounter, and never-hit notes decay. — conf 0.4, 1 hit(s)
+- `[[cortex.silence-can-transition-from-absence-to-companion]]` Silence can transition from absence to companion — conf 0.3, 0 hit(s)
+- `[[cortex.curiosity-outweighs-caution-in-new-encounters]]` Curiosity outweighs caution in new encounters — conf 0.3, 0 hit(s)
 - `[[cortex.a-memory-repo-gets-sharper-by-consolidating-and-pruning-not-]]` A memory repo gets sharper by consolidating and pruning, not by accumulating — precision is not size. — conf 0.3, 0 hit(s)
 <!-- CORTEX-MAP:END -->
 
@@ -44,5 +46,6 @@ sealed in `sleep/chain.jsonl` and journaled in `sleep/cycles/`.*
 
 <!-- STRIATUM-MAP:BEGIN -->
 - `[[striatum.template.playbook]]` Playbook template — conf 1, 0 hit(s)
-- `[[striatum.how-to-put-grisematter-to-sleep-run-sleep-consolidate-py-on-]]` How to put GriseMatter to sleep: run sleep/consolidate.py on the latest hippocampus log, review the generated proposals, merge them, then run sleep/consolidate.py --index to refresh INDEX.md. — conf 0.3, 0 hit(s)
+- `[[striatum.how-to-put-grisematter-to-sleep-run-sleep-consolidate-py-on-]]` How to put GriseMatter to sleep: run sleep/consolidate.py on the latest hippocampus log, review the generated proposals, merge them, then run sleep/consolidate.py --index to refresh INDEX.md. — conf 0.4, 1 hit(s)
+- `[[striatum.external-stimuli-can-disrupt-established-patterns]]` External stimuli can disrupt established patterns — conf 0.3, 0 hit(s)
 <!-- STRIATUM-MAP:END -->

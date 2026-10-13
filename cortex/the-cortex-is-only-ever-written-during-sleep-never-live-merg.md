@@ -2,11 +2,11 @@
 id: cortex.the-cortex-is-only-ever-written-during-sleep-never-live-merg
 type: semantic
 title: The cortex is only ever written during sleep, never live — merging a reviewed proposal is the sleep event.
-confidence: 0.3
+confidence: 0.4
 source: hippocampus/2026-10-12.md
 created: 2026-10-12
-last_hit: never
-hits: 0
+last_hit: 2026-10-13
+hits: 1
 status: active
 ---
 

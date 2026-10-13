@@ -2,11 +2,11 @@
 id: cortex.confidence-starts-at-0-3-grows-by-0-1-per-re-encounter-and-n
 type: semantic
 title: Confidence starts at 0.3, grows by 0.1 per re-encounter, and never-hit notes decay.
-confidence: 0.3
+confidence: 0.4
 source: hippocampus/2026-10-12.md
 created: 2026-10-12
-last_hit: never
-hits: 0
+last_hit: 2026-10-13
+hits: 1
 status: active
 ---
 
