@@ -353,6 +353,11 @@ Respond ONLY with a JSON object, no markdown fences:
 Rules: max 3 new memories, and only claims your journals actually support — their provenance will be this day. Reinforce only ids from your inventory that the day genuinely re-confirmed (max 5). Empty lists are honest: some days teach nothing."""
 
 
+def slugify(text):
+    s = re.sub(r"[^a-z0-9]+", "-", text.lower()).strip("-")
+    return s[:60] or "note"
+
+
 def note_inventory():
     notes = []
     for region in ("cortex", "striatum"):
