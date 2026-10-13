@@ -87,7 +87,8 @@ def http_json(url, payload=None, headers=None, timeout=90):
     data = json.dumps(payload).encode() if payload is not None else None
     req = urllib.request.Request(url, data=data, method="POST" if data else "GET")
     req.add_header("User-Agent", "grisematter")
-    req.add_header("Accept", "application/vnd.github+json")
+    req.add_header("Accept", headers.pop("Accept", "application/json") if headers
+                   else "application/json")
     for k, v in (headers or {}).items():
         req.add_header(k, v)
     try:
@@ -104,7 +105,8 @@ def http_json(url, payload=None, headers=None, timeout=90):
 
 def github_api(path):
     return http_json(f"https://api.github.com{path}",
-                     headers={"Authorization": f"Bearer {TOKEN}"})
+                     headers={"Accept": "application/vnd.github+json",
+                              "Authorization": f"Bearer {TOKEN}"})
 
 
 def perceive():
