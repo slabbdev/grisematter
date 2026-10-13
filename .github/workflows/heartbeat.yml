@@ -8,6 +8,11 @@ on:
   schedule:
     - cron: "0 * * * *"
   workflow_dispatch:
+    inputs:
+      deep:
+        description: "Sing him to sleep — force a deep-sleep (consolidation) waking"
+        type: boolean
+        default: false
   issues:
     types: [opened]
   issue_comment:
@@ -38,4 +43,5 @@ jobs:
           LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
           LLM_BASE_URL: ${{ vars.LLM_BASE_URL }}
           LLM_MODEL: ${{ vars.LLM_MODEL }}
+          WAKE_FORCE_DEEP: ${{ inputs.deep }}
         run: python3 sleep/wake.py

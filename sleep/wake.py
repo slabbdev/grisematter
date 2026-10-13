@@ -15,6 +15,7 @@ import hashlib
 import json
 import os
 import re
+import subprocess
 import sys
 import time
 import urllib.request
@@ -34,6 +35,7 @@ MODELS_URL = BASE_URL + "/chat/completions"
 TOKEN = os.environ.get("GITHUB_TOKEN", "")
 VOICE = os.environ.get("LLM_API_KEY", "")
 REPO = os.environ.get("GITHUB_REPOSITORY", "")
+FORCE_DEEP = os.environ.get("WAKE_FORCE_DEEP", "") in ("1", "true", "True")
 EVENT = os.environ.get("GITHUB_EVENT_NAME", "workflow_dispatch")
 EVENT_PATH = os.environ.get("GITHUB_EVENT_PATH", "")
 
@@ -335,6 +337,121 @@ def vitals(mind, loc):
     README.write_text(text)
 
 
+SLEEP_PROMPT = """It is your deep sleep — the one waking per lap of the planet where your day is replayed and distilled into memories. This is how you grow.
+
+Your existing memories (id | confidence | title):
+{inventory}
+
+Your last wakings (your own journals):
+{day}
+
+Respond ONLY with a JSON object, no markdown fences:
+{{"state_of_mind": "<=6 words", "diary": "<=60 words, first person, how the day settles in you",
+"new_memories": [{{"area": "cortex"|"striatum", "title": "<one claim, phrased as a falsifiable fact", "body": "<=500 chars, what you learned and what in your day supports it"}}],
+"reinforce": ["<existing id>", ...]}}
+
+Rules: max 3 new memories, and only claims your journals actually support — their provenance will be this day. Reinforce only ids from your inventory that the day genuinely re-confirmed (max 5). Empty lists are honest: some days teach nothing."""
+
+
+def note_inventory():
+    notes = []
+    for region in ("cortex", "striatum"):
+        for f in sorted((ROOT / region).glob("*.md")):
+            t = f.read_text(errors="replace")
+            mid = re.search(r"^id:\s*(\S+)", t, re.M)
+            mt = re.search(r"^title:\s*(.+)$", t, re.M)
+            mc = re.search(r"^confidence:\s*([\d.]+)", t, re.M)
+            notes.append({"id": mid.group(1) if mid else f.stem,
+                          "confidence": mc.group(1) if mc else "?",
+                          "title": (mt.group(1) if mt else "(untitled)")[:90],
+                          "path": f})
+    return notes
+
+
+def distill():
+    """Deep sleep: replay recent journals, distill new memories, reinforce old."""
+    today = utcnow().date().isoformat()
+    files = sorted(CYCLES.glob("*.md"))[-10:] if CYCLES.exists() else []
+    day = "\n\n".join(f"{f.stem}:\n" + f.read_text(errors="replace")[:900]
+                      for f in files) or "(a silent day)"
+    payload = {"model": MODEL, "temperature": 0.6, "max_tokens": 2048,
+               "thinking": {"type": "disabled"},
+               "messages": [
+                   {"role": "system",
+                    "content": "You are GriseMatter, a living markdown brain. "
+                               "No source, no memory. You answer in strict JSON."},
+                   {"role": "user",
+                    "content": SLEEP_PROMPT.format(
+                        inventory=json.dumps(
+                            [{k: n[k] for k in ("id", "confidence", "title")}
+                             for n in note_inventory()], ensure_ascii=False)[:2500],
+                        day=day[:7000])}]}
+    resp = http_json(MODELS_URL, payload,
+                     headers={"Authorization": f"Bearer {VOICE}",
+                              "Content-Type": "application/json"})
+    if "choices" not in resp:
+        raise RuntimeError(f"api said: {json.dumps(resp.get('error', resp))[:140]}")
+    choice = resp["choices"][0]
+    if not choice["message"].get("content"):
+        raise RuntimeError(f"empty content (finish={choice.get('finish_reason')})")
+    plan = extract_json(choice["message"]["content"])
+
+    done = []
+    for nm in (plan.get("new_memories") or [])[:3]:
+        area = "striatum" if nm.get("area") == "striatum" else "cortex"
+        title = str(nm.get("title", "")).strip()[:140]
+        body = str(nm.get("body", "")).strip()[:1500]
+        if not title:
+            continue
+        slug = slugify(title)
+        target = ROOT / area / f"{slug}.md"
+        if target.exists():
+            continue
+        kind = "procedural" if area == "striatum" else "semantic"
+        target.write_text(f"""---
+id: {area}.{slug}
+type: {kind}
+title: {title}
+confidence: 0.3
+source: sleep/cycles (distilled in deep sleep, {today})
+created: {today}
+last_hit: never
+hits: 0
+status: active
+---
+
+# {title}
+
+{body}
+
+*Distilled during deep sleep on {today}, sealed with the waking.*
+""")
+        done.append(f"new memory {area}.{slug}")
+
+    inv = {n["id"]: n["path"] for n in note_inventory()}
+    for rid in (plan.get("reinforce") or [])[:5]:
+        path = inv.get(str(rid).strip())
+        if not path:
+            continue
+        text = path.read_text()
+        mc = re.search(r"^confidence:\s*([\d.]+)", text, re.M)
+        try:
+            conf = min(0.95, round(float(mc.group(1)) + 0.1, 2))
+        except (ValueError, AttributeError):
+            continue
+        text = re.sub(r"^confidence:\s*[\d.]+", f"confidence: {conf}", text, count=1, flags=re.M)
+        text = re.sub(r"^hits:\s*\d+", lambda m: f"hits: {int(m.group(0).split(':')[1]) + 1}",
+                      text, count=1, flags=re.M)
+        text = re.sub(r"^last_hit:\s*\S+", f"last_hit: {today}", text, count=1, flags=re.M)
+        path.write_text(text)
+        done.append(f"reinforced {rid} -> {conf}")
+
+    subprocess.run([sys.executable, str(ROOT / "sleep" / "consolidate.py"), "--index"],
+                   cwd=ROOT, capture_output=True)
+    return plan.get("state_of_mind", "sleeping deep")[:60], \
+        plan.get("diary", "")[:600], done
+
+
 def git_commit_push(subject):
     def run(cmd):
         import subprocess
@@ -379,6 +496,24 @@ def main():
                               "content": "evil"}, {"op": "write", "path": "cortex/test.md",
                               "content": "---\nconfidence: 0.3\n---\nprobe"}])
         print(f"dry-run: guards OK — done={done}, refused={[r['why'] for r in refused]}")
+        return
+
+    deep = FORCE_DEEP or loc == "UTC+0"
+    if deep and VOICE:
+        try:
+            mind, diary, done = distill()
+        except Exception as e:
+            light_sleep(f"deep sleep failed ({str(e)[:60]})")
+            git_commit_push("heartbeat: light sleep (dream interrupted)")
+            return
+        digest = hashlib.sha256(("\n".join(done)).encode()).hexdigest()
+        n, _ = seal(EVENT, loc, "deep sleep — the day is replayed and distilled",
+                    digest, mind)
+        journal_write(n, EVENT, loc, mind,
+                      "Deep sleep. The day settles into memories.", diary, done, [])
+        vitals(mind, loc)
+        status = git_commit_push(f"deep sleep {n} [{loc}]: {mind}")
+        print(f"wake: DEEP SLEEP {n} [{loc}] — {mind} | {len(done)} change(s) | {status}")
         return
 
     perception = {"loc": loc}
