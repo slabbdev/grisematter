@@ -238,7 +238,8 @@ def decide(perception):
     sysmsg = CONSTITUTION.format(loc=perception["loc"])
     user = ("PERCEPTION (JSON):\n" + json.dumps(perception, ensure_ascii=False)[:9000]
             + "\n\nDecide this waking. Respond with ONLY the JSON object.")
-    payload = {"model": MODEL, "temperature": 0.8, "max_tokens": 1600,
+    payload = {"model": MODEL, "temperature": 0.8, "max_tokens": 2400,
+               "thinking": {"type": "disabled"},
                "messages": [{"role": "system", "content": sysmsg},
                             {"role": "user", "content": user}]}
     resp = http_json(MODELS_URL, payload,
@@ -246,7 +247,10 @@ def decide(perception):
                               "Content-Type": "application/json"})
     if "choices" not in resp:
         raise RuntimeError(f"api said: {json.dumps(resp.get('error', resp))[:140]}")
-    return extract_json(resp["choices"][0]["message"]["content"])
+    choice = resp["choices"][0]
+    if not choice["message"].get("content"):
+        raise RuntimeError(f"empty content (finish={choice.get('finish_reason')})")
+    return extract_json(choice["message"]["content"])
 
 
 def seal(trigger, loc, intention, digest, mind):
