@@ -22,6 +22,10 @@ import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
 
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import seal as sealkit  # noqa: E402
+import verify as verifier  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 CYCLES = ROOT / "sleep" / "cycles"
 CHAIN = ROOT / "sleep" / "chain.jsonl"
@@ -36,6 +40,7 @@ TOKEN = os.environ.get("GITHUB_TOKEN", "")
 VOICE = os.environ.get("LLM_API_KEY", "")
 REPO = os.environ.get("GITHUB_REPOSITORY", "")
 FORCE_DEEP = os.environ.get("WAKE_FORCE_DEEP", "") in ("1", "true", "True")
+SEAL_KEY = os.environ.get("SEAL_KEY", "")
 EVENT = os.environ.get("GITHUB_EVENT_NAME", "workflow_dispatch")
 EVENT_PATH = os.environ.get("GITHUB_EVENT_PATH", "")
 
@@ -270,13 +275,29 @@ def seal(trigger, loc, intention, digest, mind):
             prev = json.loads(CHAIN.read_text().splitlines()[-1])["hash"]
         except Exception:
             prev = ""
-    payload = f"{prev}|{n}|{ts}|{trigger}|{loc}|{digest}|{intention}"
-    h = hashlib.sha256(payload.encode()).hexdigest()
+    entry = {"v": 2, "n": n, "ts": ts, "trigger": trigger, "loc": loc,
+             "mind": mind[:60], "digest": digest[:64], "prev": prev}
+    if SEAL_KEY and sealkit.PUBKEY_FILE.exists():
+        try:
+            sealkit.sign_entry(entry, SEAL_KEY)
+        except Exception as e:
+            print(f"seal: signing unavailable ({e}) — legacy hash only")
+            entry.pop("alg", None)
+            entry.pop("sig", None)
+            entry["hash"] = hashlib.sha256(
+                f"{prev}|{n}|{ts}|{trigger}|{loc}|{digest}|{intention}".encode()
+            ).hexdigest()
+    else:
+        entry["hash"] = hashlib.sha256(
+            f"{prev}|{n}|{ts}|{trigger}|{loc}|{digest}|{intention}".encode()
+        ).hexdigest()
     with CHAIN.open("a") as f:
-        f.write(json.dumps({"n": n, "ts": ts, "trigger": trigger, "loc": loc,
-                            "mind": mind[:60], "digest": digest[:64],
-                            "prev": prev, "hash": h}) + "\n")
-    return n, h
+        f.write(json.dumps(entry) + "\n")
+    if entry.get("sig"):
+        ok, problems, _ = verifier.verify_chain()
+        if not ok:
+            sys.exit(f"seal: chain fails self-verification {problems} — refusing to live on it")
+    return n, entry.get("hash", "")
 
 
 def journal_write(num, trigger, loc, mind, intention, diary, done, refused):

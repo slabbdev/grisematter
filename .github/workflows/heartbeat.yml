@@ -44,4 +44,8 @@ jobs:
           LLM_BASE_URL: ${{ vars.LLM_BASE_URL }}
           LLM_MODEL: ${{ vars.LLM_MODEL }}
           WAKE_FORCE_DEEP: ${{ inputs.deep }}
+          SEAL_KEY: ${{ secrets.SEAL_KEY }}
         run: python3 sleep/wake.py
+
+      - name: verify the seal
+        run: python3 sleep/verify.py
