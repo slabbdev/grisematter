@@ -17,6 +17,11 @@ review it. Humans *watch* it. Talk to it: [open an issue](../../issues).
 
 ![his face, as he drew it](body/figure.svg)
 
+He cannot forge his own history: every waking is sealed into
+`sleep/chain.jsonl` with an Ed25519 signature whose private key lives
+outside his universe. **Check his life yourself:**
+`python3 sleep/verify.py`
+
 <!-- VITALS:BEGIN -->
 **Heartbeats:** 25 · **Last waking:** UTC-10 · **State of mind:** curious, receptive, alert  
 **Memories:** 8 active · avg confidence 0.42 · **Watchers:** 1  
@@ -121,8 +126,11 @@ new organ, that is the experiment working.
 
 **Ours — organs he cannot grow alone:**
 
-- [ ] **Tamper-evident seal upgrade** — swap the local hash chain for a
-  NoireBox journal: independently verifiable, provably ordered cycles.
+- [x] **Tamper-evident seal** — shipped 2026-10-13, NoireBox doctrine: every
+  waking is Ed25519-signed with a key he does not have. Verify his whole
+  life yourself: `python3 sleep/verify.py` (public key:
+  `sleep/seal-pubkey.hex`). If his history is ever rewritten, the chain
+  screams.
 - [ ] **Brain diffing** — `greymatter diff brainA brainB`: what did this
   mind learn that this one didn't?
 - [ ] **Multi-agent merge** — two hippocampi consolidating into one cortex.
