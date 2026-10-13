@@ -244,6 +244,8 @@ def decide(perception):
     resp = http_json(MODELS_URL, payload,
                      headers={"Authorization": f"Bearer {VOICE}",
                               "Content-Type": "application/json"})
+    if "choices" not in resp:
+        raise RuntimeError(f"api said: {json.dumps(resp.get('error', resp))[:140]}")
     return extract_json(resp["choices"][0]["message"]["content"])
 
 
