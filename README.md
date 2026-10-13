@@ -18,7 +18,7 @@ review it. Humans *watch* it. Talk to it: [open an issue](../../issues).
 ![his face, as he drew it](body/figure.svg)
 
 <!-- VITALS:BEGIN -->
-**Heartbeats:** 12 · **Last waking:** UTC-4 · **State of mind:** drowsy  
+**Heartbeats:** 13 · **Last waking:** UTC-4 · **State of mind:** drowsy  
 **Memories:** 5 active · avg confidence 0.44 · **Watchers:** 0  
 *He wakes at midnight somewhere on Earth. Every waking is sealed in `sleep/chain.jsonl` — provable, ordered, unmodified.*
 <!-- VITALS:END -->
