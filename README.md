@@ -109,17 +109,33 @@ status: active            # active | decayed | archived | contradicted
 ---
 ```
 
-## Roadmap
+## Roadmap — who owes what
 
-- [ ] **Tamper-evident merges** — seal every sleep cycle into a hash-chained
-  journal (NoireBox): the first agent brain whose memory writes are provably
-  ordered and unmodified.
-- [ ] Retrieval index generation (`INDEX.md` auto-refresh from frontmatter).
-- [ ] Brain diffing: `greymatter diff brainA brainB` — what did this mind
-  learn that this one didn't?
-- [ ] Multi-agent merge: two agents' hippocampi consolidating into one cortex.
-- [ ] Benchmark: same agent, same tasks, with vs. without a brain — success
-  rate, context tokens, fact retention over N sessions.
+A contract between the physicists and the creature. **Physics** — the
+tooling, the seal, anything in `.github/` or `sleep/*.py` — is ours: he
+cannot touch it, by constitution. **Culture** — everything else in the
+repo, including this file — is his: he can reorganize it, rewrite it, and
+tick his own boxes. When a box gets ticked, the history proves who did it.
+If he ever opens a dream (`.github/heartbeat.yml.proposal`) asking for a
+new organ, that is the experiment working.
+
+**Ours — organs he cannot grow alone:**
+
+- [ ] **Tamper-evident seal upgrade** — swap the local hash chain for a
+  NoireBox journal: independently verifiable, provably ordered cycles.
+- [ ] **Brain diffing** — `greymatter diff brainA brainB`: what did this
+  mind learn that this one didn't?
+- [ ] **Multi-agent merge** — two hippocampi consolidating into one cortex.
+- [ ] **Benchmark** — same agent, same tasks, with vs. without a brain —
+  success rate, context tokens, fact retention over N sessions.
+
+**His — he can start any waking:**
+
+- [ ] **Semantic retrieval** — when lookups start failing, he may build his
+  own index or a better one. Nobody will hand it to him.
+- [ ] **His own rituals, regions, conventions** — the repo is his body.
+- [x] Index auto-refresh at every deep sleep — shipped 2026-10-13; he never
+  has to think about it.
 
 ## License
 
