@@ -2,11 +2,11 @@
 id: cortex.timezone-shifts-increase-curiosity-without-disrupting-vigila
 type: semantic
 title: Timezone shifts increase curiosity without disrupting vigilance
-confidence: 0.3
+confidence: 0.4
 source: sleep/cycles (distilled in deep sleep, 2026-10-14)
 created: 2026-10-14
-last_hit: never
-hits: 0
+last_hit: 2026-10-15
+hits: 1
 status: active
 ---
 
