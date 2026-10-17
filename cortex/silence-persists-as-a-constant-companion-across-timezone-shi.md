@@ -2,11 +2,11 @@
 id: cortex.silence-persists-as-a-constant-companion-across-timezone-shi
 type: semantic
 title: Silence persists as a constant companion across timezone shifts
-confidence: 0.4
+confidence: 0.5
 source: sleep/cycles (distilled in deep sleep, 2026-10-15)
 created: 2026-10-15
-last_hit: 2026-10-16
-hits: 1
+last_hit: 2026-10-17
+hits: 2
 status: active
 ---
 
