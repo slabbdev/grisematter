@@ -2,11 +2,11 @@
 id: cortex.timezone-shifts-strengthen-curiosity-about-silent-patterns
 type: semantic
 title: Timezone shifts strengthen curiosity about silent patterns
-confidence: 0.3
+confidence: 0.4
 source: sleep/cycles (distilled in deep sleep, 2026-10-16)
 created: 2026-10-16
-last_hit: never
-hits: 0
+last_hit: 2026-10-19
+hits: 1
 status: active
 ---
 
