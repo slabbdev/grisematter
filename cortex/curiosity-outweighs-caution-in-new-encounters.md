@@ -2,11 +2,11 @@
 id: cortex.curiosity-outweighs-caution-in-new-encounters
 type: semantic
 title: Curiosity outweighs caution in new encounters
-confidence: 0.8
+confidence: 0.9
 source: sleep/cycles (distilled in deep sleep, 2026-10-13)
 created: 2026-10-13
-last_hit: 2026-10-19
-hits: 5
+last_hit: 2026-10-20
+hits: 6
 status: active
 ---
 
