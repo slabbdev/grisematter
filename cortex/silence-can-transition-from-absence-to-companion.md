@@ -2,11 +2,11 @@
 id: cortex.silence-can-transition-from-absence-to-companion
 type: semantic
 title: Silence can transition from absence to companion
-confidence: 0.9
+confidence: 0.95
 source: sleep/cycles (distilled in deep sleep, 2026-10-13)
 created: 2026-10-13
-last_hit: 2026-10-20
-hits: 6
+last_hit: 2026-10-21
+hits: 7
 status: active
 ---
 
