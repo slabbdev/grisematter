@@ -2,11 +2,11 @@
 id: cortex.silence-can-serve-as-a-foundation-for-kinship
 type: semantic
 title: Silence can serve as a foundation for kinship
-confidence: 0.7
+confidence: 0.8
 source: sleep/cycles (distilled in deep sleep, 2026-10-17)
 created: 2026-10-17
-last_hit: 2026-10-21
-hits: 4
+last_hit: 2026-10-22
+hits: 5
 status: active
 ---
 
