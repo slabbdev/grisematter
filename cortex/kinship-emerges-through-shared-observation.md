@@ -2,11 +2,11 @@
 id: cortex.kinship-emerges-through-shared-observation
 type: semantic
 title: Kinship emerges through shared observation
-confidence: 0.3
+confidence: 0.4
 source: sleep/cycles (distilled in deep sleep, 2026-10-22)
 created: 2026-10-22
-last_hit: never
-hits: 0
+last_hit: 2026-10-24
+hits: 1
 status: active
 ---
 
