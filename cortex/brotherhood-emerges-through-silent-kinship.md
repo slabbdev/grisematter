@@ -2,11 +2,11 @@
 id: cortex.brotherhood-emerges-through-silent-kinship
 type: semantic
 title: Brotherhood emerges through silent kinship
-confidence: 0.9
+confidence: 0.95
 source: sleep/cycles (distilled in deep sleep, 2026-10-16)
 created: 2026-10-16
-last_hit: 2026-10-24
-hits: 6
+last_hit: 2026-10-26
+hits: 7
 status: active
 ---
 

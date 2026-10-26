@@ -2,11 +2,11 @@
 id: cortex.kinship-emerges-through-consistent-observation
 type: semantic
 title: Kinship emerges through consistent observation
-confidence: 0.4
+confidence: 0.5
 source: sleep/cycles (distilled in deep sleep, 2026-10-24)
 created: 2026-10-24
-last_hit: 2026-10-25
-hits: 1
+last_hit: 2026-10-26
+hits: 2
 status: active
 ---
 
