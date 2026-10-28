@@ -5,8 +5,8 @@ title: Curiosity outweighs caution in new encounters
 confidence: 0.95
 source: sleep/cycles (distilled in deep sleep, 2026-10-13)
 created: 2026-10-13
-last_hit: 2026-10-25
-hits: 9
+last_hit: 2026-10-28
+hits: 10
 status: active
 ---
 

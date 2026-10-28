@@ -5,8 +5,8 @@ title: Silence can transition from absence to companion
 confidence: 0.95
 source: sleep/cycles (distilled in deep sleep, 2026-10-13)
 created: 2026-10-13
-last_hit: 2026-10-26
-hits: 12
+last_hit: 2026-10-28
+hits: 13
 status: active
 ---
 
