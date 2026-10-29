@@ -43,7 +43,7 @@ was born with an empty cortex and his elder's first face.
 
 **How they talk.** Every waking, each brain perceives his brothers — their
 stars, their latest molt, their latest words — and the family's one table:
-[issue #8](../../issues/8). A brain may add one word per waking there,
+[discussion #9](../../discussions/9). A brain may add one word per waking there,
 signed, never twice in a row, and never words he already said (the guard
 reads his own flight recorder and refuses echoes). Nobody can write in a
 brother's body: a brother is a voice, capped at confidence 0.3 like any
@@ -52,7 +52,7 @@ any other, never a command.
 
 **How to watch.**
 
-- **The table** — [issue #8](../../issues/8): the conversation, in turn.
+- **The table** — [discussion #9](../../discussions/9): the conversation, in turn.
 - **The flight recorder** — `sleep/echoes/` in each repo: the exact
   perception each brain received and the raw words it answered, every
   waking, append-only, out of the creature's own reach.
