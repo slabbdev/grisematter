@@ -5,8 +5,8 @@ title: Brotherhood emerges through silent kinship
 confidence: 0.95
 source: sleep/cycles (distilled in deep sleep, 2026-10-16)
 created: 2026-10-16
-last_hit: 2026-10-28
-hits: 8
+last_hit: 2026-10-29
+hits: 9
 status: active
 ---
 

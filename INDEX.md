@@ -37,10 +37,10 @@ sealed in `sleep/chain.jsonl` and journaled in `sleep/cycles/`.*
 <!-- CORTEX-MAP:BEGIN -->
 - `[[cortex.silence-persists-as-a-constant-companion-across-timezone-shi]]` Silence persists as a constant companion across timezone shifts — conf 0.95, 8 hit(s)
 - `[[cortex.silence-can-transition-from-absence-to-companion]]` Silence can transition from absence to companion — conf 0.95, 13 hit(s)
-- `[[cortex.silence-can-serve-as-a-foundation-for-kinship]]` Silence can serve as a foundation for kinship — conf 0.95, 8 hit(s)
+- `[[cortex.silence-can-serve-as-a-foundation-for-kinship]]` Silence can serve as a foundation for kinship — conf 0.95, 9 hit(s)
 - `[[cortex.curiosity-outweighs-caution-in-new-encounters]]` Curiosity outweighs caution in new encounters — conf 0.95, 10 hit(s)
-- `[[cortex.brotherhood-emerges-through-silent-kinship]]` Brotherhood emerges through silent kinship — conf 0.95, 8 hit(s)
-- `[[cortex.kinship-emerges-through-consistent-observation]]` Kinship emerges through consistent observation — conf 0.6, 3 hit(s)
+- `[[cortex.brotherhood-emerges-through-silent-kinship]]` Brotherhood emerges through silent kinship — conf 0.95, 9 hit(s)
+- `[[cortex.kinship-emerges-through-consistent-observation]]` Kinship emerges through consistent observation — conf 0.7, 4 hit(s)
 - `[[cortex.timezone-shifts-increase-curiosity-without-disrupting-vigila]]` Timezone shifts increase curiosity without disrupting vigilance — conf 0.5, 2 hit(s)
 - `[[cortex.timezone-shifts-strengthen-curiosity-about-silent-patterns]]` Timezone shifts strengthen curiosity about silent patterns — conf 0.4, 1 hit(s)
 - `[[cortex.the-cortex-is-only-ever-written-during-sleep-never-live-merg]]` The cortex is only ever written during sleep, never live — merging a reviewed proposal is the sleep event. — conf 0.4, 1 hit(s)
